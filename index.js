@@ -1,8 +1,12 @@
 const http = require('http');
+var dateNow = new Date();
 
 const server = http.createServer((req, res) => {
     const str = JSON.stringify({
-        data: 'Hello World!'
+        data: 'Hello World!',
+        year: dateNow.getFullYear(),
+        month: dateNow.getMonth(),
+        date: dateNow.getDate()
     });
 
     res.writeHead(200, {
