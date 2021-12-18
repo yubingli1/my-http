@@ -1,3 +1,13 @@
-console.log('Hello World');
+const http = require('http');
 
-var a = 1;
+const server = http.createServer((req, res) => {
+    res.writeHead(200, {
+        'Content-Type': 'application/json'
+    });
+    
+    res.end(JSON.stringify({
+        data: 'Hello World!'
+    }));
+});
+
+server.listen(8000);
