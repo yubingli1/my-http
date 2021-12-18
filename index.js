@@ -7,8 +7,11 @@ const server = http.createServer((req, res) => {
         data: 'Hello World!',
         year: dateNow.getFullYear(),
         month: month_en[dateNow.getMonth() - 1],
-        date: dateNow.getDate()
-    });
+        date: dateNow.getDate(),
+    },
+        space='\t',
+        space=2
+    );
 
     res.writeHead(200, {
         'Content-Type': 'application/json',
