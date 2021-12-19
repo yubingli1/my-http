@@ -9,8 +9,7 @@ const server = http.createServer((req, res) => {
         month: month_en[dateNow.getMonth()],
         date: dateNow.getDate(),
     },
-        space = '\t',
-        space = 2
+        '\t', 2
     );
 
     res.writeHead(200, {
