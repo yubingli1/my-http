@@ -33,4 +33,6 @@ const server = http.createServer((req, res) => {
     });
 
     res.end(JSON.stringify(result));
-})
+});
+
+server.listen(8000);
