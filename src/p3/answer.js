@@ -1,27 +1,27 @@
-const database = require("./database");
+const database = require('./database');
 const http = require('http');
-
-function getAllPhoneList() {
-        return database.phone;
-    };
 
 function getEmpty() {
     return null;
 }
 
+function getFilteredPhoneList(keyword) {
+    const value = database.phone;
+    return value.filter(arr => arr.includes(keyword));
+}
+
 function route(url) {
-    if(url === '/phone?kw=a') {
-        return getAllPhoneList;
+    if(url.includes('/phone?kw=')) {
+        return getFilteredPhoneList;
     } else {
         return getEmpty;
     }
 }
 
 const server = http.createServer((req, res) => {
-    //const myURL = new URL('https://localhost:8000/phone?kw=a');
     const myURL = new URL(req.url, `http://${req.headers.host}`);
     const keyword = myURL.searchParams.get('kw');
-    const result = route(req.url)()?.filter(arr => arr.includes(keyword));
+    const result = route(req.url)(keyword);
 
     res.writeHead(200, {
         "Content-Type": 'application/json'
