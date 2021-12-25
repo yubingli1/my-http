@@ -26,5 +26,11 @@ function route(url) {
 }
 
 const server = http.createServer((req, res) => {
-    const result = route(req.url);
+    const result = route(req.url)();
+
+    res.writeHead(200, {
+        "Content-Type": 'application/json'
+    });
+
+    res.end(JSON.stringify(result));
 })
