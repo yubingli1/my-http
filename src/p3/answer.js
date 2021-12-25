@@ -18,16 +18,20 @@ function route(url) {
     }
 }
 
-const server = http.createServer((req, res) => {
-    const myURL = new URL(req.url, `http://${req.headers.host}`);
-    const keyword = myURL.searchParams.get('kw');
-    const result = route(req.url)(keyword);
+const server = http.createServer();
 
-    res.writeHead(200, {
-        "Content-Type": 'application/json'
-    });
+server.on('request', function(req, res) {
+    if(req.url !== '/favicon.ico') {
+        const myURL = new URL(req.url, `http://${req.headers.host}`);
+        const keyword = myURL.searchParams.get('kw');
+        const result = route(req.url)(keyword);
 
-    res.end(JSON.stringify(result));
+        res.writeHead(200, {
+            "Content-Type": 'application/json'
+        });
+
+        res.end(JSON.stringify(result));
+    }
 });
 
 server.listen(8000);
