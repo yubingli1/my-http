@@ -1,26 +1,26 @@
 const http = require('http');
 
 const server = http.createServer((req, res) => {
-    //console.log(req);
+	//console.log(req);
 
-    if (req.url == '/ok') {
-        const str = 'ok';
+	if (req.url === '/ok') {
+		const str = 'ok';
 
-        res.writeHead(200, {
-            'Content-Type': 'application/json',
-            'Content-Length': str.length
-        });
+		res.writeHead(200, {
+			'Content-Type': 'application/json',
+			'Content-Length': str.length
+		});
 
-        res.end(str);
-    }
+		res.end(str);
+	}
 
-    else {
-        res.writeHead(404, {
-            'Content-Type': 'application/json'
-        });
+	else {
+		res.writeHead(404, {
+			'Content-Type': 'application/json'
+		});
 
-        res.end();
-    }
+		res.end();
+	}
 });
 
 server.listen(8000);
