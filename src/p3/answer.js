@@ -22,7 +22,7 @@ function getFilteredPhoneList(indexUrl, keyword) {
     return value().filter(arr => arr.includes(keyword));
 }
 
-function Filter(url){
+function Filter(url) {
     if(url.includes('?kw=')) {
         return getFilteredPhoneList;
     } else {
