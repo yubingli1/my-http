@@ -12,9 +12,7 @@ const server = http.createServer((req, res) => {
 		});
 
 		res.end(str);
-	}
-
-	else {
+	} else {
 		res.writeHead(404, {
 			'Content-Type': 'application/json'
 		});
