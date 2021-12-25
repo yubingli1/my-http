@@ -1,6 +1,8 @@
 const http = require('http');
 
-const server = http.createServer((req, res) => {
+const server = http.
+
+((req, res) => {
 	//console.log(req);
 
 	if (req.url === '/ok') {
