@@ -17,28 +17,16 @@ const routingtable = {
         }
 
         if(keyword !== null) {
-            return filter;
+            return filter();
         } else {
-            function getPhoneList() {
-                return database.phone;
-            }
-
-            return getPhoneList;
+            return database.phone;
         }
     },
     '/laptop': function getAllLaptopList() {
-        function getLaptopList() {
-            return database.laptop;
-        }
-
-        return getLaptopList;
+        return database.laptop;
     },
     '/router': function getAllRouterList() {
-        function getRouterList() {
-            return database.router;
-        }
-        
-        return getRouterList;
+        return database.router;
     }
 };
 
@@ -61,7 +49,7 @@ server.on('request', function(req, res) {
         const myURL = new URL(req.url, `http://${req.headers.host}`);
         const indexUrl = myURL.pathname;
         const findUrl = myURL.searchParams;
-        const result = route(indexUrl)(findUrl)();
+        const result = route(indexUrl)(findUrl);
 
         res.writeHead(200, {
             "Content-Type": 'application/json'
