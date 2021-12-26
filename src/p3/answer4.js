@@ -4,7 +4,7 @@ const http = require('http');
 const routingtable = {
     '/phone': function getAllPhoneList(findUrl) {
         const keyword = findUrl.get('kw');
-        
+
         function filter() {
             const result = [];
             
@@ -16,17 +16,29 @@ const routingtable = {
             return result;
         }
 
-        if(keyword !== null){
+        if(keyword !== null) {
             return filter;
         } else {
-            return database.phone;
+            function getPhoneList() {
+                return database.phone;
+            }
+
+            return getPhoneList;
         }
     },
     '/laptop': function getAllLaptopList() {
-        return database.laptop;
+        function getLaptopList() {
+            return database.laptop;
+        }
+
+        return getLaptopList;
     },
     '/router': function getAllRouterList() {
+        function getRouterList() {
             return database.router;
+        }
+        
+        return getRouterList;
     }
 };
 
