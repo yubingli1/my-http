@@ -2,7 +2,9 @@ const database = require('./database');
 const http = require('http');
 
 const routingtable = {
-    '/phone': function getAllPhoneList(keyword) {
+    '/phone': function getAllPhoneList(findUrl) {
+        const keyword = findUrl.get('kw');
+        
         function filter() {
             const result = [];
             
@@ -32,13 +34,12 @@ function getEmpty() {
     return null;
 }
 
-function route(url, indexUrl) {
-    for(let key in routingtable){
-        if(url.includes(key)) {
-            return routingtable[indexUrl];
-        }
+function route(indexUrl) {
+    if(indexUrl in routingtable) {
+        return routingtable[indexUrl];
+    } else {
+        return getEmpty;
     }
-    return getEmpty;
 }
 
 const server = http.createServer();
@@ -47,11 +48,8 @@ server.on('request', function(req, res) {
     if(req.url !== '/favicon.ico') {
         const myURL = new URL(req.url, `http://${req.headers.host}`);
         const indexUrl = myURL.pathname;
-        //const keyObject = Object.fromEntries(myURL.searchParams.entries());
-        //const key = Object.keys(keyObject).toString();
-        const keyword = myURL.searchParams.get('kw');
-        const result = route(req.url, indexUrl)(keyword)();
-
+        const findUrl = myURL.searchParams;
+        const result = route(indexUrl)(findUrl)();
 
         res.writeHead(200, {
             "Content-Type": 'application/json'
