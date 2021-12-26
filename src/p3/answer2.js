@@ -32,7 +32,7 @@ function Filter(source, url, keyword) {
     }
 }
 
-//路由器使用选择器
+//路由器使用查询器
 //使用indexUrl索引避免了使用/phone?等不完整语句带来的错误
 function route(url, indexUrl) {
     for(let key in routingtable){

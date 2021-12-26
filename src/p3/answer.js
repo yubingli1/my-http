@@ -17,16 +17,16 @@ function getEmpty() {
     return null;
 }
 
-function getFilteredPhoneList(indexUrl, keyword) {
+function getFilteredList(indexUrl, keyword) {
     const value = routingtable[indexUrl];
     return value().filter(arr => arr.includes(keyword));
 }
 
-function Filter(url) {
+function Filter(url, indexUrl) {
     if(url.includes('?kw=')) {
-        return getFilteredPhoneList;
+        return getFilteredList;
     } else {
-        return routingtable[url];
+        return routingtable[indexUrl];
     }
 }
 
@@ -47,7 +47,7 @@ server.on('request', function(req, res) {
         const keyword = myURL.searchParams.get('kw');
         const indexLength = req.url.length - myURL.search.length;
         const indexUrl = req.url.slice(0, indexLength);
-        const result = route(req.url)(req.url)(indexUrl, keyword);
+        const result = route(req.url)(req.url, indexUrl)(indexUrl, keyword);
 
         res.writeHead(200, {
             "Content-Type": 'application/json'
