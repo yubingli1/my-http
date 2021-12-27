@@ -5,19 +5,16 @@ const routingtable = {
     '/phone': function getAllPhoneList(findUrl) {
         const keyword = findUrl.get('kw');
 
-        function filter() {
+        if(keyword !== null) {
             const result = [];
-            
-            for(let arr of database.phone) {
-                if(arr.includes(keyword)) {
-                    result.push(arr);
+        
+            for(const str of database.phone) {
+                if(str.includes(keyword)) {
+                    result.push(str);
                 }
             }
-            return result;
-        }
 
-        if(keyword !== null) {
-            return filter();
+            return result;
         } else {
             return database.phone;
         }
@@ -42,21 +39,16 @@ function route(indexUrl) {
     }
 }
 
-const server = http.createServer();
+const server = http.createServer((req, res) => {
+    const myURL = new URL(req.url, `http://${req.headers.host}`);
+    const indexUrl = myURL.pathname;
+    const findUrl = myURL.searchParams;
+    const result = route(indexUrl)(findUrl);
 
-server.on('request', function(req, res) {
-    if(req.url !== '/favicon.ico') {
-        const myURL = new URL(req.url, `http://${req.headers.host}`);
-        const indexUrl = myURL.pathname;
-        const findUrl = myURL.searchParams;
-        const result = route(indexUrl)(findUrl);
+    res.writeHead(200, {
+        "Content-Type": 'application/json'
+    });
 
-        res.writeHead(200, {
-            "Content-Type": 'application/json'
-        });
-
-        res.end(JSON.stringify(result));
-    }
+    res.end(JSON.stringify(result));
 });
-
 server.listen(8000);
