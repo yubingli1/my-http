@@ -27,8 +27,12 @@ const routingtable = {
     }
 };
 
-function getEmpty() {
-    return null;
+function getEmpty(indexUrl, res) {
+    res.writeHead(404, {
+        'Content-Type': 'application/json'
+    });
+    
+    res.end();
 }
 
 function route(indexUrl) {
@@ -42,23 +46,14 @@ function route(indexUrl) {
 const server = http.createServer((req, res) => {
     const myURL = new URL(req.url, `http://${req.headers.host}`);
     const indexUrl = myURL.pathname;
+    const findUrl = myURL.searchParams;
+    const result = route(indexUrl)(findUrl, res);
 
-    if(indexUrl in routingtable) {
-        const findUrl = myURL.searchParams;
-        const result = route(indexUrl)(findUrl);
+    res.writeHead(200, {
+        "Content-Type": 'application/json'
+    });
 
-        res.writeHead(200, {
-            "Content-Type": 'application/json'
-        });
-
-        res.end(JSON.stringify(result));
-    } else {
-        res.writeHead(404, {
-        'Content-Type': 'application/json'
-        });
-
-        res.end();
-    }
+    res.end(JSON.stringify(result));
 });
 
 server.listen(8000);
