@@ -42,13 +42,24 @@ function route(indexUrl) {
 const server = http.createServer((req, res) => {
     const myURL = new URL(req.url, `http://${req.headers.host}`);
     const indexUrl = myURL.pathname;
-    const findUrl = myURL.searchParams;
-    const result = route(indexUrl)(findUrl);
 
-    res.writeHead(200, {
-        "Content-Type": 'application/json'
-    });
+    if(indexUrl in routingtable) {
+        const findUrl = myURL.searchParams;
+        const result = route(indexUrl)(findUrl);
 
-    res.end(JSON.stringify(result));
+        res.writeHead(200, {
+            "Content-Type": 'application/json'
+        });
+        console.log(req);
+
+        res.end(JSON.stringify(result));
+    } else {
+        res.writeHead(404, {
+        'Content-Type': 'application/json'
+        });
+
+        res.end();
+    }
 });
+
 server.listen(8000);
