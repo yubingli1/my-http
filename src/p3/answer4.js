@@ -27,19 +27,15 @@ const routingtable = {
     }
 };
 
-function getEmpty(indexUrl, res) {
-    res.writeHead(404, {
-        'Content-Type': 'application/json'
-    });
-    
-    res.end();
+function getEmpty() {
+    return null;
 }
 
 function route(indexUrl) {
     if(indexUrl in routingtable) {
         return routingtable[indexUrl];
     } else {
-        return getEmpty;
+        return getEmpty; 
     }
 }
 
@@ -47,13 +43,23 @@ const server = http.createServer((req, res) => {
     const myURL = new URL(req.url, `http://${req.headers.host}`);
     const indexUrl = myURL.pathname;
     const findUrl = myURL.searchParams;
-    const result = route(indexUrl)(findUrl, res);
+    const Queryer = route(indexUrl);
 
-    res.writeHead(200, {
-        "Content-Type": 'application/json'
-    });
+    if(Queryer === getEmpty) {
+        res.writeHead(404, {
+            'Content-Type': 'application/json'
+        });
+        
+        res.end();
+    } else {
+        const result = Queryer(findUrl);
 
-    res.end(JSON.stringify(result));
+        res.writeHead(200, {
+            "Content-Type": 'application/json'
+        });
+
+        res.end(JSON.stringify(result));
+    }
 });
 
 server.listen(8000);
