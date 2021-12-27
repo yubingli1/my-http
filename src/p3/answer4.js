@@ -50,7 +50,6 @@ const server = http.createServer((req, res) => {
         res.writeHead(200, {
             "Content-Type": 'application/json'
         });
-        console.log(req);
 
         res.end(JSON.stringify(result));
     } else {
