@@ -17,6 +17,7 @@ const routingTable = {
 
         if(searchParams.get('sortby') !== null) {
             //return filteredArray.sort().reverse();
+            
             return filteredArray.sort((str1, str2) => {
                 if(str1 > str2) {
                     return -1;
