@@ -10,18 +10,12 @@ const routingTable = {
             .filter(modelName => modelName.includes(finalKeyword));
     },
     '/laptop'(searchParams) {
-        const keywordList = [];
-
-        for(const key of searchParams.keys()) {
-            keywordList.push(key);
-        }
-
         const keyword = searchParams.get('keyword');
         const filterKeyword = keyword === null ? '' : keyword;
         const filteredArray = database.laptop
         .filter(modelName => modelName.includes(filterKeyword));
 
-        if(keywordList.includes('sortby')) {
+        if(searchParams.get('sortby') !== null) {
             return filteredArray.sort().reverse();
         }
 
