@@ -22,22 +22,29 @@ const routingTable = {
         return filteredArray;
     },
     '/router'(searchParams) {
-        const keyword = searchParams.get('keyword');
-        const filterKeyword = keyword === null ? '' : keyword;
-        const filteredArray = database.router
-        .filter(modelName => modelName.includes(filterKeyword));
+        const searchValue = searchParams.get('keyword');
+        const ascValue = searchParams.get('asc');
+        const sortValue = searchParams.get('sortby');
+        const filterKeyword = searchValue === null ? '' : searchValue;
 
-        if(searchParams.get('sortby') !== null) {
-            const sortedArray = filteredArray.sort();
+        if(searchValue !== null) {
+            const filteredArray = database.router
+            .filter(modelName => modelName.includes(filterKeyword));
 
-            if(searchParams.get('asc') === 'true') {
-                return sortedArray;
+                if(sortValue !== null) {
+                const sortedArray = filteredArray.sort();
+
+                    if(ascValue === 'true') {
+                        return sortedArray;
+                    }
+
+                return sortedArray.reverse();
             }
 
-            return sortedArray.reverse();
+            return filteredArray;
         }
-
-        return filteredArray;
+        
+        return database.router;
     }
 };
 
