@@ -65,6 +65,6 @@ http.createServer((req, res) => {
     const responseBody = JSON.stringify(result);
 
     res.statusCode = 200;
-    res.end(responseBody)
+    res.end(responseBody);
 
 }).listen(8000); 
