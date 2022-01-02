@@ -16,10 +16,11 @@ const ID2 = setTimeout(function() {
 
 setTimeout(() => clearTimeout(generater), 20000); */
 
-setTimeout(() => clearTimeout(generater), 20000);
+let ID = [];
+setTimeout(() => clearTimeout(ID), 20000);
 
 (function generater() {
-    setTimeout(function() {
+    ID = setTimeout(function() {
         console.log('hello world');
         generater();
     }, 3000)
